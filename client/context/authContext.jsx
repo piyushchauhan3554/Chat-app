@@ -77,12 +77,20 @@ export const AuthProvider = ({ children }) => {
   const connectSocket = (userData) => {
     if (!userData || socket?.connected) return;
     const newSocket = io(backendUrl, {
-      query: {
-        userId: userData._id,
-      },
+      auth: { userId: userData._id },
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
     });
+
     newSocket.connect();
     setSocket(newSocket);
+
+    newSocket.on("connect", () => {
+      console.log("socket connected", newSocket.id);
+    });
+    newSocket.on("connect_error", (err) => {
+      console.log("socket connection error", err.message);
+    });
 
     newSocket.on("getOnlineUsers", (userIds) => {
       setOnlineUsers(userIds);

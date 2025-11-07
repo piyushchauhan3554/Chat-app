@@ -61,18 +61,20 @@ export const ChatProvider = ({ children }) => {
   const subscribeToMessages = async () => {
     if (!socket) return;
     socket.on("newMessage", (newMessage) => {
-      if (selectedUser && newMessage.senderId === selectedUser._id) {
+      if (
+        selectedUser &&
+        String(newMessage.senderId) === String(selectedUser._id)
+      ) {
         newMessage.seen = true;
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         axios.put(`/api/messages/mark/${newMessage._id}`);
       } else {
-        // if senderId do not match with selected user id
-        // then increment the count of unseenMessages
-
+        // increment unseen count
+        const senderIdStr = String(newMessage.senderId);
         setUnseenMessages((prevUnseenMessages) => ({
           ...prevUnseenMessages,
-          [newMessage.senderId]: prevUnseenMessages[newMessage.senderId]
-            ? prevUnseenMessages[newMessage.senderId] + 1
+          [senderIdStr]: prevUnseenMessages[senderIdStr]
+            ? prevUnseenMessages[senderIdStr] + 1
             : 1,
         }));
       }
@@ -93,7 +95,15 @@ export const ChatProvider = ({ children }) => {
   }, [socket, selectedUser]);
 
   const value = {
-    messages,users,selectedUser,getUsers,getMessages,sendMessage,setSelectedUser,unseenMessages,setUnseenMessages
+    messages,
+    users,
+    selectedUser,
+    getUsers,
+    getMessages,
+    sendMessage,
+    setSelectedUser,
+    unseenMessages,
+    setUnseenMessages,
   };
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 };

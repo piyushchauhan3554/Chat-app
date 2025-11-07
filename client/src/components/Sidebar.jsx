@@ -3,6 +3,7 @@ import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { ChatContext } from "../../context/ChatContext";
+
 const Sidebar = () => {
   const {
     getUsers,
@@ -12,10 +13,12 @@ const Sidebar = () => {
     unseenMessages,
     setUnseenMessages,
   } = useContext(ChatContext);
+
   const { logout, onlineUsers } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [input, setInput] = useState(false);
+  const [input, setInput] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false); // ✅ click-based toggle for dropdown
 
   const filteredUsers = input
     ? users.filter((user) =>
@@ -26,35 +29,54 @@ const Sidebar = () => {
   useEffect(() => {
     getUsers();
   }, [onlineUsers]);
+
   return (
     <div
-      className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${
+      className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl text-white relative overflow-visible ${
         selectedUser ? "max-md:hidden" : ""
       }`}
     >
+      {/* ===== HEADER ===== */}
       <div className="pb-5">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center relative">
           <img src={assets.logo} alt="logo" className="max-w-40" />
-          <div className="relative py-2 group">
+
+          {/* ===== MENU DROPDOWN ===== */}
+          <div className="relative py-2 z-50">
             <img
               src={assets.menu_icon}
               alt="menu"
               className="max-h-5 cursor-pointer"
+              onClick={() => setMenuOpen(!menuOpen)}
             />
-            <div className="absolute top-full right-0 z-50 w-32 p-5 rounded-md bg-[#282142] border border-gray-600 text-gray-100 hidden group-hover:block">
-              <p
-                onClick={() => navigate("/profile")}
-                className="cursor-pointer text-sm"
-              >
-                Edit Profile
-              </p>
-              <hr className="my-2 border-t border-gray-500" />
-              <p onClick={() => logout()} className="cursor-pointer text-sm">
-                Logout
-              </p>
-            </div>
+
+            {menuOpen && (
+              <div className="absolute top-full right-0 mt-2 w-36 p-4 rounded-md bg-[#282142] border border-gray-600 text-gray-100 shadow-lg">
+                <p
+                  onClick={() => {
+                    navigate("/profile");
+                    setMenuOpen(false);
+                  }}
+                  className="cursor-pointer text-sm hover:text-violet-400"
+                >
+                  Edit Profile
+                </p>
+                <hr className="my-2 border-t border-gray-500" />
+                <p
+                  onClick={() => {
+                    logout();
+                    setMenuOpen(false);
+                  }}
+                  className="cursor-pointer text-sm hover:text-violet-400"
+                >
+                  Logout
+                </p>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* ===== SEARCH BAR ===== */}
         <div className="flex items-center bg-[#282142] rounded-full gap-2 py-3 px-4 mt-5">
           <img src={assets.search_icon} alt="Search" className="w-3" />
           <input
@@ -65,41 +87,43 @@ const Sidebar = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col">
-        {filteredUsers.map((user, index) => {
-          return (
-            <div
-              key={index}
-              onClick={() => {
-                setSelectedUser(user);
-                setUnseenMessages((prev) => ({ ...prev, [user._id]: 0 }));
-              }}
-              className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${
-                selectedUser?._id === user._id && "bg-[282142]/50"
-              }`}
-            >
-              <img
-                src={user?.profilePic || assets.avatar_icon}
-                className="w-[35px] aspect-square rounded-full  "
-              />
-              <div className="flex flex-col leading-5">
-                <p>{user.fullName}</p>
-                {onlineUsers &&
-                onlineUsers.includes &&
-                onlineUsers.includes(user._id) ? (
-                  <span className="text-green-500 text-sm">online</span>
-                ) : (
-                  <span className="text-neutral-500 text-sm">offline</span>
-                )}
-              </div>
-              {unseenMessages[user._id] > 0 && (
-                <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50">
-                  {unseenMessages[user._id]}
-                </p>
+
+      {/* ===== USERS LIST ===== */}
+      <div className="flex flex-col overflow-y-auto max-h-[70vh]">
+        {filteredUsers.map((user, index) => (
+          <div
+            key={index}
+            onClick={() => {
+              setSelectedUser(user);
+              setUnseenMessages((prev) => ({ ...prev, [user._id]: 0 }));
+            }}
+            className={`relative flex items-center gap-3 p-2 pl-4 rounded-lg cursor-pointer transition-all duration-200 hover:bg-[#282142]/30 ${
+              selectedUser?._id === user._id ? "bg-[#282142]/50" : ""
+            }`}
+          >
+            <img
+              src={user?.profilePic || assets.avatar_icon}
+              className="w-[35px] aspect-square rounded-full"
+              alt="profile"
+            />
+            <div className="flex flex-col leading-5">
+              <p>{user.fullName}</p>
+              {onlineUsers &&
+              onlineUsers.includes &&
+              onlineUsers.includes(user._id) ? (
+                <span className="text-green-500 text-sm">online</span>
+              ) : (
+                <span className="text-neutral-500 text-sm">offline</span>
               )}
             </div>
-          );
-        })}
+
+            {unseenMessages[user._id] > 0 && (
+              <p className="absolute top-3 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/70">
+                {unseenMessages[user._id]}
+              </p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
