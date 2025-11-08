@@ -1,6 +1,15 @@
-# 💬 Chat App
+# 💬 QuickChat – Real-Time Chat Application
 
-A **real-time chat application** built using **React.js**, **Node.js**, **Express.js**, and **MongoDB**, enabling seamless communication between users with real-time message updates via **WebSockets (Socket.io)**.  
+🚀 **QuickChat** is a full-stack real-time chat application built using the **MERN Stack** and **Socket.io**, enabling seamless instant messaging between users. It features secure authentication, media sharing, profile customization, and real-time online/offline status updates.
+
+🔗 **Live Demo:** [QuickChat on Vercel](https://the-chatapp-quickchat.vercel.app/)
+
+---
+
+## 🧠 Overview
+
+QuickChat allows users to **sign up, log in, chat instantly**, and share images with other registered users.  
+The app uses **WebSockets (Socket.io)** for real-time, bidirectional communication and maintains an intuitive UI for a smooth messaging experience.
 
 ---
 
