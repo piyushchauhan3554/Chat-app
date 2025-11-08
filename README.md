@@ -1,82 +1,34 @@
-# 💬 QuickChat – Real-Time Chat Application
+# 💬 Chat App
 
-🚀 **QuickChat** is a full-stack real-time chat application built using the **MERN Stack** and **Socket.io**, enabling seamless instant messaging between users. It features secure authentication, media sharing, profile customization, and real-time online/offline status updates.
-
-🔗 **Live Demo:** [QuickChat on Vercel](https://the-chatapp-quickchat.vercel.app/)
+A **real-time chat application** built using **React.js**, **Node.js**, **Express.js**, and **MongoDB**, enabling seamless communication between users with real-time message updates via **WebSockets (Socket.io)**.  
 
 ---
 
-## 🧠 Overview
+## 🚀 Features
 
-QuickChat allows users to **sign up, log in, chat instantly**, and share images with other registered users.  
-The app uses **WebSockets (Socket.io)** for real-time, bidirectional communication and maintains an intuitive UI for a smooth messaging experience.
-
----
-
-## ✨ Features
-
-- 🔐 **User Authentication:** Secure login and signup using JWT & bcrypt.
-- 🧑‍💻 **Edit Profile:** Users can update their name, bio, and profile picture.
-- 🟢 **Online/Offline Status:** Displays real-time user presence.
-- 🖼️ **Image Sharing:** Send and receive images in chats.
-- 🕓 **Media History:** View all previously shared media with a selected user in the sidebar.
-- 💬 **Instant Messaging:** Real-time text communication using Socket.io.
-- 🎨 **Modern UI:** Built with React.js and Tailwind CSS for a responsive design.
-- ☁️ **Cloud Image Storage:** Secure image upload and hosting (via Cloudinary).
+- 🔐 **User Authentication** (Signup/Login with JWT)
+- 💬 **Real-time messaging** using **Socket.IO**
+- 👥 **Online/Offline user status**
+- 🖼️ **Image upload support** (via **Cloudinary**)
+- 📱 **Responsive UI** built with **Tailwind CSS**
+- ⚡ **Fast backend APIs** using **Express.js**
+- 🧠 **State management** with React Context API
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React.js, Tailwind CSS  
-**Backend:** Node.js, Express.js  
-**Database:** MongoDB  
-**Real-Time Communication:** Socket.io  
-**Authentication:** JWT, bcrypt  
-**Hosting:** Vercel
-
----
-# 💬 QuickChat – Real-Time Chat Application
-
-🚀 **QuickChat** is a full-stack real-time chat application built using the **MERN Stack** and **Socket.io**, enabling seamless instant messaging between users. It features secure authentication, media sharing, profile customization, and real-time online/offline status updates.
-
-🔗 **Live Demo:** [QuickChat on Vercel](https://the-chatapp-quickchat.vercel.app/)
+**Frontend:** React.js, Tailwind CSS, Context API, Axios  
+**Backend:** Node.js, Express.js, MongoDB, Mongoose, Socket.IO  
+**Authentication:** JSON Web Token (JWT)  
+**Media Storage:** Cloudinary  
+**Tools:** Postman, Git & GitHub  
 
 ---
 
-## 🧠 Overview
+## ⚙️ Setup & Run Locally
 
-QuickChat allows users to **sign up, log in, chat instantly**, and share images with other registered users.  
-The app uses **WebSockets (Socket.io)** for real-time, bidirectional communication and maintains an intuitive UI for a smooth messaging experience.
-
----
-
-## ✨ Features
-
-- 🔐 **User Authentication:** Secure login and signup using JWT & bcrypt.
-- 🧑‍💻 **Edit Profile:** Users can update their name, bio, and profile picture.
-- 🟢 **Online/Offline Status:** Displays real-time user presence.
-- 🖼️ **Image Sharing:** Send and receive images in chats.
-- 🕓 **Media History:** View all previously shared media with a selected user in the sidebar.
-- 💬 **Instant Messaging:** Real-time text communication using Socket.io.
-- 🎨 **Modern UI:** Built with React.js and Tailwind CSS for a responsive design.
-- ☁️ **Cloud Image Storage:** Secure image upload and hosting (via Cloudinary or similar).
-
----
-
-## 🛠️ Tech Stack
-
-**Frontend:** React.js, Tailwind CSS  
-**Backend:** Node.js, Express.js  
-**Database:** MongoDB  
-**Real-Time Communication:** Socket.io  
-**Authentication:** JWT, bcrypt  
-**Hosting:** Vercel (Frontend), Render/Other (Backend)
-
----
-
-## ⚙️ Installation & Setup
-
+```bash
 # 1️⃣ Clone the repository
 git clone https://github.com/piyushchauhan3554/Chat-app.git
 cd Chat-app
@@ -97,15 +49,8 @@ npm install
 # 4️⃣ Run the Application
 # Start backend
 cd server
-npm start
+npm start &
 
 # Start frontend
 cd ../client
 npm run dev
-
-
-
-
-
-## 📁 Folder Structure
-
